@@ -7,19 +7,19 @@
 ###
 
 <div align="right">
-  <a href="https://www.linkedin.com/in/mogamaal/" target="_blank" style="text-decoration: none;">
+  <a href="https://www.linkedin.com/in/mogamaal/" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="70" height="50" alt="linkedin logo"  />
   </a>
-  <a href="mailto:muhammedgamal997@gmail.com" target="_blank" style="text-decoration: none;">
+  <a href="mailto:muhammedgamal997@gmail.com" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/gmail/default.svg" width="70" height="50" alt="gmail logo"  />
   </a>
-  <a href="https://www.youtube.com/@Dev_Jimmy" target="_blank" style="text-decoration: none;">
+  <a href="https://www.youtube.com/@Dev_Jimmy" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="70" height="50" alt="youtube logo"  />
   </a>
-  <a href="https://wa.me/01289223643?text=%22Welcome%20Jimmy%22" target="_blank" style="text-decoration: none;">
+  <a href="https://wa.me/01289223643?text=%22Welcome%20Jimmy%22" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/whatsapp/default.svg" width="70" height="50" alt="whatsapp logo"  />
   </a>
-  <a href="https://t.me/ji_mmy99" target="_blank" style="text-decoration: none;">
+  <a href="https://t.me/ji_mmy99" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/telegram/default.svg" width="70" height="50" alt="telegram logo"  />
   </a>
 </div>
@@ -117,14 +117,14 @@
 <br clear="both">
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com?user=devJimmy990&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&date_format=M%20j%5B,%20Y%5D&order=3" height="180" alt="streak graph"  />
+  <img src="https://streak-stats.demolab.com?user=devJimmy990&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&date_format=M%20j%5B,%20Y%5D&order=3" height="220" alt="streak graph"  />
 </div>
 
 ###
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=devJimmy990&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=dracula&locale=en&hide_border=false&order=1&custom_title=Github%20Stats" height="200" alt="stats graph"  />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=devJimmy990&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false&order=2" height="200" alt="languages graph"  />
+  <img src="https://github-readme-stats.vercel.app/api?username=devJimmy990&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=dracula&locale=en&hide_border=false&order=1&custom_title=Github%20Stats" height="150" alt="stats graph"  />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=devJimmy990&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false&order=2" height="150" alt="languages graph"  />
 </div>
 
 ###

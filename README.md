@@ -7,23 +7,23 @@
 ###
 
  <div align="right">
-        <a href="https://www.linkedin.com/in/mogamaal/" target="_blank" style="color: transparent;">
+        <a href="https://www.linkedin.com/in/mogamaal/" target="_blank" style="color: transparent; text-decoration: none;">
             <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg"
                 width="70" height="50" alt="linkedin logo" />
         </a>
-        <a href="mailto:muhammedgamal997@gmail.com" target="_blank" style="color: transparent;">
+        <a href="mailto:muhammedgamal997@gmail.com" target="_blank" style="color: transparent; text-decoration: none;">
             <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/gmail/default.svg"
                 width="70" height="50" alt="gmail logo" />
         </a>
-        <a href="https://www.youtube.com/@Dev_Jimmy" target="_blank" style="color: transparent;">
+        <a href="https://www.youtube.com/@Dev_Jimmy" target="_blank" style="color: transparent; text-decoration: none;">
             <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg"
                 width="70" height="50" alt="youtube logo" />
         </a>
-        <a href="https://wa.me/01289223643?text=%22Welcome%20Jimmy%22" target="_blank" style="color: transparent;">
+        <a href="https://wa.me/01289223643?text=%22Welcome%20Jimmy%22" target="_blank" style="color: transparent; text-decoration: none;">
             <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/whatsapp/default.svg"
                 width="70" height="50" alt="whatsapp logo" />
         </a>
-        <a href="https://t.me/ji_mmy99" target="_blank" style="color: transparent;">
+        <a href="https://t.me/ji_mmy99" target="_blank" style="color: transparent; text-decoration: none;">
             <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/telegram/default.svg"
                 width="70" height="50" alt="telegram logo" />
         </a>
@@ -55,7 +55,7 @@
 ###
 
 <div align="left">
-  <img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript logo"  />
+  <a href="https://www.linkedin.com/in/mogamaal/" target="_blank"><img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript logo"  /></a>
   <img width="12" />
   <img src="https://skillicons.dev/icons?i=ts" height="40" alt="typescript logo"  />
   <img width="12" />

@@ -55,7 +55,7 @@
 ###
 
 <div align="left">
-    <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+    <a target= "_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
         <img src="https://skillicons.dev/icons?i=js" height="40" alt="javascript logo" />
     </a>
     <a target="_blank" href="https://www.typescriptlang.org/">

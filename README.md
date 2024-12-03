@@ -11,7 +11,7 @@
 ###
 
 <div align="right">
-    <a href="https://www.linkedin.com/in/mogamaal/" target="_blank" style="color: transparent; text-decoration: none;">
+    <a href="https://www.linkedin.com/in/mogamaal/" target="_blank" style="color: transparent; text-decoration: none;" rel="noopener noreferrer">
         <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="70" height="50" alt="linkedin logo" />
     </a>
     <a href="mailto:muhammedgamal997@gmail.com" target="_blank" style="color: transparent; text-decoration: none;">

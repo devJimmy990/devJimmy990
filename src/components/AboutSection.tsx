@@ -7,17 +7,17 @@ const AboutSection = () => {
     {
       icon: <Code className="h-8 w-8 text-primary" />,
       title: "Web Development",
-      description: "I build responsive and performant web applications using modern frameworks like React."
+      description: "Build responsive and performant web applications using modern frameworks like React."
     },
     {
       icon: <Smartphone className="h-8 w-8 text-accent" />,
       title: "Mobile Development",
-      description: "I create cross-platform mobile applications using Flutter that work seamlessly on iOS and Android."
+      description: "Create cross-platform mobile applications using Flutter that work seamlessly on iOS and Android."
     },
     {
       icon: <LayoutGrid className="h-8 w-8 text-primary" />,
       title: "UI/UX Design",
-      description: "I design intuitive user interfaces with a focus on user experience and accessibility."
+      description: "Proficiency in using Figma to translate design prototypes into functional mobile interfaces."
     }
   ];
 

@@ -40,7 +40,7 @@ export const projectService = {
       return [];
     }
   },
-  
+
   create: async (project: Project) => {
     try {
       const response = await api.post("/project", project);
@@ -50,7 +50,7 @@ export const projectService = {
       throw error;
     }
   },
-  
+
   update: async (project: Project) => {
     try {
       const response = await api.put("/project", project);
@@ -60,7 +60,7 @@ export const projectService = {
       throw error;
     }
   },
-  
+
   delete: async (id: string) => {
     try {
       const response = await api.delete(`/project/${id}`);
@@ -93,7 +93,7 @@ export const cvService = {
       return [];
     }
   },
-  
+
   create: async (cv: CV) => {
     try {
       const response = await api.post("/cv", cv);
@@ -103,7 +103,7 @@ export const cvService = {
       throw error;
     }
   },
-  
+
   update: async (cv: CV) => {
     try {
       const response = await api.put("/cv", cv);
@@ -113,7 +113,7 @@ export const cvService = {
       throw error;
     }
   },
-  
+
   delete: async (id: string) => {
     try {
       const response = await api.delete(`/cv/${id}`);

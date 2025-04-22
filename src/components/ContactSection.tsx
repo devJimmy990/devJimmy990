@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin  } from "lucide-react";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -27,7 +27,7 @@ const ContactSection = () => {
     {
       icon: <Phone className="h-6 w-6" />,
       title: "Phone",
-      content: "+20 1289223643",
+      content: "+20 128 922 3643",
       link: "tel:+201289223643"
     },
     {
@@ -60,7 +60,7 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       // Send email using mailto link
       const subject = encodeURIComponent(formData.subject);
@@ -68,15 +68,15 @@ const ContactSection = () => {
         `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
       );
       const mailtoLink = `mailto:muhammedgamal997@gmail.com?subject=${subject}&body=${body}`;
-      
+
       // Open the email client
       window.open(mailtoLink, '_blank');
-      
+
       toast({
         title: "Message prepared",
         description: "Your message has been prepared for sending. Please send it from your email client.",
       });
-      
+
       // Reset form after a short delay
       setTimeout(() => {
         setFormData({
@@ -114,7 +114,7 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
           <div className="lg:col-span-2 space-y-6">
             {contactInfo.map((item, index) => (
-              <a 
+              <a
                 key={index}
                 href={item.link}
                 target={item.title === "Location" ? "_blank" : undefined}
@@ -127,7 +127,7 @@ const ContactSection = () => {
                       {item.icon}
                     </div>
                     <div>
-                      <h4 className="font-medium group-hover:text-primary transition-colors">{item.title}</h4>
+                      <h4 className="font-medium transition-colors">{item.title}</h4>
                       <p className="text-muted-foreground group-hover:text-primary transition-colors">
                         {item.content}
                       </p>
@@ -144,11 +144,11 @@ const ContactSection = () => {
 
             <div className="flex gap-4 mt-8 justify-center lg:justify-start">
               {socialLinks.map((social) => (
-                <a 
+                <a
                   key={social.name}
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer" 
+                  rel="noopener noreferrer"
                   className="bg-card hover:bg-primary/20 transition-all p-3 rounded-full border border-white/5 transform hover:scale-110"
                 >
                   <span className="sr-only">{social.name}</span>
@@ -157,7 +157,7 @@ const ContactSection = () => {
               ))}
             </div>
           </div>
-          
+
           <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -182,7 +182,7 @@ const ContactSection = () => {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Input
                 name="subject"
@@ -193,7 +193,7 @@ const ContactSection = () => {
                 className="bg-card border-white/5 focus:border-primary/50"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Textarea
                 name="message"
@@ -204,10 +204,10 @@ const ContactSection = () => {
                 className="min-h-[150px] bg-card border-white/5 focus:border-primary/50 resize-none"
               />
             </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full gap-2 transition-all transform hover:scale-105" 
+
+            <Button
+              type="submit"
+              className="w-full gap-2 transition-all transform hover:scale-105"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Sending..." : (

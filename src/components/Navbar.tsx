@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link, useLocation } from 'react-router-dom';
+import { useCVLinks } from '@/contexts/CVLinksContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +19,7 @@ const Navbar = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const { cvLinks, loading } = useCVLinks();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -28,17 +30,6 @@ const Navbar = () => {
     { name: "Projects", href: "#projects" },
     { name: "Contact", href: "#contact" },
   ];
-
-  const resumeLinks = {
-    mobile: "https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link",
-    frontend: "https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
-  };
-
-  const downloadCV = (type: 'mobile' | 'frontend') => {
-    // Convert Google Drive view link to direct download link
-    const driveLink = resumeLinks[type];
-    window.open(driveLink, '_blank');
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,9 +71,26 @@ const Navbar = () => {
     }
   };
 
+  // Get Mobile and Frontend CV links from context
+  const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
+  const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
+
+  // Default links as fallback
+  const defaultLinks = {
+    mobile: "https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link",
+    frontend: "https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
+  };
+
+  const downloadCV = (type: 'mobile' | 'frontend') => {
+    const link = type === 'mobile' 
+      ? (mobileCVLink || defaultLinks.mobile)
+      : (frontendCVLink || defaultLinks.frontend);
+    window.open(link, '_blank');
+  };
+
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrollPosition > 50 ? 'bg-background/90 backdrop-blur-lg shadow-md' : 'bg-transparent'}`}>
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <nav className="container mx-auto py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <img src="/profile.png" alt="DevJimmy"
             className="h-10 w-10 rounded-full object-cover border-2 border-primary"

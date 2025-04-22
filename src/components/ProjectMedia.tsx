@@ -5,7 +5,6 @@ import { Play } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import VideoModal from "@/components/VideoModal";
 import { Project } from "@/data/projects";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ProjectMediaProps {
   project: Project;
@@ -18,29 +17,34 @@ const ProjectMedia = ({
   isVideoOpen,
   setIsVideoOpen,
 }: ProjectMediaProps) => {
-  const isMobile = useIsMobile();
-
   return (
     <>
-      <div className="aspect-video rounded-lg overflow-hidden bg-muted mb-6 relative group">
-        <img
-          src={project.cover || "/placeholder.svg"}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
-        {project.video && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-black/60 border-white text-white hover:bg-black/80"
-              onClick={() => setIsVideoOpen(true)}
-            >
-              <Play className="h-6 w-6 mr-2" /> Watch Demo
-            </Button>
-          </div>
-        )}
-      </div>
+      {project.video ? (
+        <div className="aspect-video rounded-lg overflow-hidden bg-muted mb-6 relative group">
+          <Button
+            variant="outline"
+            size="lg"
+            className="absolute inset-0 w-full h-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+            onClick={() => setIsVideoOpen(true)}
+          >
+            <Play className="h-6 w-6 mr-2" /> Watch Demo
+          </Button>
+          <img
+            src={project.cover || "/placeholder.svg"}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ) : project.cover && (
+        <div className="aspect-video rounded-lg overflow-hidden bg-muted mb-6">
+          <img
+            src={project.cover}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      
       {project.images && project.images.length > 0 && (
         <div className="mb-8">
           <h3 className="text-lg font-medium mb-4">Project Gallery</h3>
@@ -63,7 +67,8 @@ const ProjectMedia = ({
           </Carousel>
         </div>
       )}
-      {project.video && !isMobile && (
+
+      {project.video && (
         <VideoModal
           isOpen={isVideoOpen}
           onClose={() => setIsVideoOpen(false)}

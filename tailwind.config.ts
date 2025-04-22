@@ -13,15 +13,17 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '1.5rem',
+			padding: {
+				DEFAULT: '1rem',
+				sm: '1.5rem',
+				lg: '2rem'
+			},
 			screens: {
-				'sm': '3750px',
+				'sm': '640px',
 				'md': '768px',
 				'lg': '1024px',
 				'xl': '1280px',
 				'2xl': '1400px',
-				'3xl': '1600px',
-				'4xl': '1800px',
 			}
 		},
 		extend: {
@@ -119,6 +121,14 @@ export default {
 				bounce: {
 					'0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
 					'50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+				},
+				pulse: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
+				},
+				shimmer: {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
 				}
 			},
 			animation: {
@@ -128,7 +138,12 @@ export default {
 				'slide-up': 'slideUp 0.5s ease-out forwards',
 				'slide-in-left': 'slideInFromLeft 0.5s ease-out forwards',
 				'slide-in-right': 'slideInFromRight 0.5s ease-out forwards',
-				'bounce-slow': 'bounce 3s infinite'
+				'bounce-slow': 'bounce 3s infinite',
+				'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'shimmer': 'shimmer 2s linear infinite'
+			},
+			textAlign: {
+				justify: 'justify'
 			}
 		}
 	},

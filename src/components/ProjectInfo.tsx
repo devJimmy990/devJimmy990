@@ -1,34 +1,32 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Play } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import { Project } from "@/data/projects";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ProjectInfoProps {
   project: Project;
-  onOpenVideo: () => void;
 }
 
-const ProjectInfo = ({ project, onOpenVideo }: ProjectInfoProps) => {
-  const isMobile = useIsMobile();
-
+const ProjectInfo = ({ project }: ProjectInfoProps) => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold mb-2">{project.title}</h1>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
+        <Badge className="mb-4 capitalize">{project.category}</Badge>
+        <div className="flex flex-wrap gap-2 mb-6">
           {project.tags.map((tag, index) => (
             <Badge key={index} variant="secondary">
               {tag}
             </Badge>
           ))}
         </div>
-        <Badge className="mb-4 capitalize">{project.category}</Badge>
       </div>
+      
       <div className="prose dark:prose-invert max-w-none">
-        <p>{project.description}</p>
+        <p className="text-muted-foreground">{project.description}</p>
       </div>
+      
       <div className="flex flex-wrap gap-4 pt-4">
         {project.githubUrl && (
           <Button className="flex items-center gap-2" variant="outline" asChild>
@@ -45,15 +43,6 @@ const ProjectInfo = ({ project, onOpenVideo }: ProjectInfoProps) => {
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4" /> Live Demo
             </a>
-          </Button>
-        )}
-        {project.video && !isMobile && (
-          <Button
-            variant="secondary"
-            className="flex items-center gap-2"
-            onClick={onOpenVideo}
-          >
-            <Play className="h-4 w-4" /> Watch Demo
           </Button>
         )}
       </div>

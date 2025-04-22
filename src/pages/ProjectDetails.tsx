@@ -15,7 +15,6 @@ import ProjectInfo from "@/components/ProjectInfo";
 import VideoModal from "@/components/VideoModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Always fetch current project by id from API on mount/param change
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -80,53 +79,54 @@ const ProjectDetails = () => {
     <ThemeProvider>
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-24 pb-16 px-4">
-          {loading ? (
-            <ProjectDetailsSkeleton />
-          ) : error ? (
-            <div className="container mx-auto">
-              <div className="text-center">
+        <main className="flex-grow pt-24 pb-16">
+          <div className="container mx-auto">
+            {loading ? (
+              <ProjectDetailsSkeleton />
+            ) : error ? (
+              <div className="text-center py-12">
                 <h1 className="text-2xl font-bold mb-4">Error Loading Project</h1>
                 <p className="text-muted-foreground mb-6">
                   Unable to load project details. Please try again later.
                 </p>
                 <Button onClick={handleBackClick}>Back to Projects</Button>
               </div>
-            </div>
-          ) : !project ? (
-            <div className="container mx-auto">
-              <div className="text-center">
+            ) : !project ? (
+              <div className="text-center py-12">
                 <h1 className="text-2xl font-bold mb-4">Project Not Found</h1>
                 <Button onClick={handleBackClick}>Back to Projects</Button>
               </div>
-            </div>
-          ) : (
-            <div className="container mx-auto">
-              <Button
-                variant="ghost"
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
-                onClick={handleBackClick}
-              >
-                <ArrowLeft className="h-4 w-4" /> Back to Projects
-              </Button>
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2">
-                  <ProjectMedia
-                    project={project}
-                    isVideoOpen={isVideoOpen}
-                    setIsVideoOpen={setIsVideoOpen}
-                  />
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
+                  onClick={handleBackClick}
+                >
+                  <ArrowLeft className="h-4 w-4" /> Back to Projects
+                </Button>
+                
+                <div className="grid lg:grid-cols-3 gap-8">
+                  <div className={`${isMobile ? 'order-2' : 'order-1'} lg:col-span-2`}>
+                    <ProjectMedia
+                      project={project}
+                      isVideoOpen={isVideoOpen}
+                      setIsVideoOpen={setIsVideoOpen}
+                    />
+                  </div>
+                  <div className={`${isMobile ? 'order-1' : 'order-2'} lg:col-span-1`}>
+                    <ProjectInfo
+                      project={project}
+                      onOpenVideo={() => setIsVideoOpen(true)}
+                    />
+                  </div>
                 </div>
-                <ProjectInfo
-                  project={project}
-                  onOpenVideo={() => setIsVideoOpen(true)}
-                />
-              </div>
-            </div>
-          )}
+              </>
+            )}
+          </div>
         </main>
         <Footer />
-        {project?.video && isMobile && (
+        {project?.video && (
           <VideoModal
             isOpen={isVideoOpen}
             onClose={() => setIsVideoOpen(false)}
@@ -139,4 +139,3 @@ const ProjectDetails = () => {
 };
 
 export default ProjectDetails;
-

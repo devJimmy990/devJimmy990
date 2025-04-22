@@ -1,9 +1,12 @@
+
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useCVLinks } from '@/contexts/CVLinksContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { cvLinks } = useCVLinks();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -12,12 +15,22 @@ const Footer = () => {
     });
   };
 
+  // Get Mobile and Frontend CV links from context
+  const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
+  const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
+
+  // Default links as fallback
+  const defaultLinks = {
+    mobile: "https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link",
+    frontend: "https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
+  };
+
   return (
     <footer className="bg-card py-6">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="flex justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <Avatar className="flex items-center gap-2">
+            <Avatar className="hidden md:flex items-center gap-2">
               <AvatarImage
                 src="/profile.png"
                 alt="DevJimmy"
@@ -32,24 +45,22 @@ const Footer = () => {
 
           <div className="flex gap-4">
             <a
-              href="https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link"
+              href={mobileCVLink || defaultLinks.mobile}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
-              Mobile CV
+              Mobile <span className="hidden md:inline">CV</span>
             </a>
             <a
-              href="https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
+              href={frontendCVLink || defaultLinks.frontend}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
-              Frontend CV
+              Frontend <span className="hidden md:inline">CV</span>
             </a>
           </div>
-
-
         </div>
 
         <div className="mt-6 flex justify-center">

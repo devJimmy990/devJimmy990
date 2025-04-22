@@ -11,7 +11,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const Index = () => {
   useEffect(() => {
-    // Scroll to top when page loads
     window.scrollTo(0, 0);
   }, []);
 

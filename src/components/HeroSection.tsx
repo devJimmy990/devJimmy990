@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -63,20 +64,22 @@ const HeroSection = () => {
 
       <div className="container mx-auto grid md:grid-cols-5 gap-8 items-center">
         <div className="md:col-span-3 space-y-4">
-          <p className="text-primary font-medium">Hello, my name is</p>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-            <span className="text-gradient">Muhammed Gamal</span>
-            <br />
-            <div className="h-[1.2em] mt-2">
-              <span className="relative inline-flex">{text}</span>
-              <span className="animate-blink inline-block bg-primary ml-1" style={{ width: "3px", height: "80%", marginBottom: "-4px" }}></span>
+          <div className="flex flex-col">
+            <p className="text-primary font-medium">Hello, I`m</p>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
+              <span className="text-gradient">Muhammed Gamal</span>
+              <br />
+              <div className="h-[1.2em] mt-1">
+                <span className="relative inline-flex">{text}</span>
+                <span className="animate-blink inline-block bg-primary ml-1" style={{ width: "2px", height: "80%", marginBottom: "-4px" }}></span>
+              </div>
+            </h1>
+            <div className="mt-4">
+              <p className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl ${isMobile ? 'text-justify' : ''}`}>
+                I craft responsive websites and mobile apps with modern technologies,
+                specializing in <span className="text-primary">React</span>, <span className="text-primary">React Native</span>, and <span className="text-accent">Flutter</span>.
+              </p>
             </div>
-          </h1>
-          <div className="mt-6">
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl">
-              I craft responsive websites and mobile apps with modern technologies,
-              specializing in <span className="text-primary">React</span>, <span className="text-primary">React Native</span>, and <span className="text-accent">Flutter</span>.
-            </p>
           </div>
           <div className="flex flex-wrap gap-4">
             <Button size={isMobile ? "default" : "lg"} className="gap-2" asChild>

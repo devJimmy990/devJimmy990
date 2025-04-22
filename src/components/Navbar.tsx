@@ -20,7 +20,7 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  
+
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
@@ -83,18 +83,13 @@ const Navbar = () => {
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrollPosition > 50 ? 'bg-background/90 backdrop-blur-lg shadow-md' : 'bg-transparent'}`}>
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <Link 
-          to="/"
-          className="flex items-center gap-2"
-        >
-          <img 
-            src="/profile.png" 
-            alt="DevJimmy" 
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/profile.png" alt="DevJimmy"
             className="h-10 w-10 rounded-full object-cover border-2 border-primary"
           />
-          <span className="text-2xl font-bold text-gradient">DevJimmy</span>
+          <span className="hidden md:block text-2xl font-bold text-gradient">DevJimmy</span>
         </Link>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
           {renderNavItems()}
@@ -107,14 +102,14 @@ const Navbar = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-md border border-white/10">
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={() => downloadCV('mobile')}
                 className="cursor-pointer hover:bg-primary/20"
               >
                 <FileText className="mr-2 h-4 w-4" />
                 <span>Mobile CV</span>
               </DropdownMenuItem>
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={() => downloadCV('frontend')}
                 className="cursor-pointer hover:bg-primary/20"
               >
@@ -124,7 +119,7 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        
+
         {/* Mobile Navigation Trigger */}
         <div className="md:hidden flex items-center gap-4">
           <ThemeToggle />
@@ -138,18 +133,18 @@ const Navbar = () => {
           </Button>
         </div>
       </nav>
-      
+
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-background/95 backdrop-blur-lg z-40 flex flex-col pt-24">
+        <div className="w-full md:hidden fixed bg-background/95 backdrop-blur-lg z-40 flex flex-col">
           <div className="container py-4 flex flex-col space-y-6">
             {renderNavItems()}
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-3">Resume</h3>
               <div className="flex flex-col space-y-2">
-                <Button 
-                  variant="outline" 
-                  className="justify-start bg-card/50" 
+                <Button
+                  variant="outline"
+                  className="justify-start bg-card/50"
                   onClick={() => {
                     downloadCV('mobile');
                     setIsMenuOpen(false);
@@ -158,9 +153,9 @@ const Navbar = () => {
                   <FileText className="mr-2 h-4 w-4" />
                   Mobile CV
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="justify-start bg-card/50" 
+                <Button
+                  variant="outline"
+                  className="justify-start bg-card/50"
                   onClick={() => {
                     downloadCV('frontend');
                     setIsMenuOpen(false);

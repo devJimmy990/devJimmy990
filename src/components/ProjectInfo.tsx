@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
@@ -12,8 +11,8 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-        <Badge className="mb-4 capitalize">{project.category}</Badge>
+        <h1 className="text-3xl font-bold mb-3">{project.title}</h1>
+        <Badge className="mb-3 capitalize">{project.category}</Badge>
         <div className="flex flex-wrap gap-2 mb-6">
           {project.tags.map((tag, index) => (
             <Badge key={index} variant="secondary">
@@ -22,11 +21,11 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
           ))}
         </div>
       </div>
-      
+
       <div className="prose dark:prose-invert max-w-none">
         <p className="text-muted-foreground">{project.description}</p>
       </div>
-      
+
       <div className="flex flex-wrap gap-4 pt-4">
         {project.githubUrl && (
           <Button className="flex items-center gap-2" variant="outline" asChild>

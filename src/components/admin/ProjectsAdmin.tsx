@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,7 @@ const ProjectsAdmin = () => {
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [tagsInput, setTagsInput] = useState("");
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -87,18 +89,25 @@ const ProjectsAdmin = () => {
   }, []);
 
   const handleOpenModal = (project: Project | null = null) => {
-    setCurrentProject(project || { ...defaultProject });
+    if (project) {
+      setCurrentProject(project);
+      setTagsInput(project.tags.join(", "));
+    } else {
+      setCurrentProject({ ...defaultProject });
+      setTagsInput("");
+    }
     setIsOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsOpen(false);
     setCurrentProject(null);
+    setTagsInput("");
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!currentProject) return;
-    
+
     setCurrentProject({
       ...currentProject,
       [e.target.name]: e.target.value,
@@ -107,18 +116,18 @@ const ProjectsAdmin = () => {
 
   const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!currentProject) return;
-    
+    console.log(e.target.value);
     const imagesArray = e.target.value.split(",").map(img => img.trim()).filter(img => img);
-    
+
     setCurrentProject({
       ...currentProject,
-      images: imagesArray.length > 0 ? imagesArray : null,
+      images: imagesArray.length > 0 ? imagesArray : [],
     });
   };
 
   const handleSelectChange = (value: string) => {
     if (!currentProject) return;
-    
+
     setCurrentProject({
       ...currentProject,
       category: value as "frontend" | "mobile",
@@ -126,10 +135,44 @@ const ProjectsAdmin = () => {
   };
 
   const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTagsInput(e.target.value);
+  };
+
+  const handleTagsInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!currentProject) return;
-    
-    const tagsArray = e.target.value.split(",").map(tag => tag.trim()).filter(tag => tag);
-    
+
+    if (e.key === ',') {
+      e.preventDefault();
+
+      // Extract tags, handling the case where the user just typed a comma
+      const newTagsInput = tagsInput.trim();
+      if (newTagsInput && !newTagsInput.endsWith(',')) {
+        setTagsInput(newTagsInput + ', ');
+      } else {
+        setTagsInput(newTagsInput + ' ');
+      }
+
+      // Update the project tags
+      const tagsArray = newTagsInput
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag);
+
+      setCurrentProject({
+        ...currentProject,
+        tags: tagsArray,
+      });
+    }
+  };
+
+  const handleTagsInputBlur = () => {
+    if (!currentProject) return;
+
+    const tagsArray = tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag);
+
     setCurrentProject({
       ...currentProject,
       tags: tagsArray,
@@ -138,26 +181,37 @@ const ProjectsAdmin = () => {
 
   const handleSubmit = async () => {
     if (!currentProject) return;
-    
+
+    // Ensure tags are properly processed before submitting
+    const tagsArray = tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag);
+
+    const projectToSubmit = {
+      ...currentProject,
+      tags: tagsArray,
+    };
+
     setIsSubmitting(true);
-    
+
     try {
-      if (currentProject._id) {
+      if (projectToSubmit._id) {
         // Update existing project
-        await projectService.update(currentProject);
+        await projectService.update(projectToSubmit);
         toast({
           title: "Success",
           description: "Project updated successfully",
         });
       } else {
         // Add new project
-        await projectService.create(currentProject);
+        await projectService.create(projectToSubmit);
         toast({
           title: "Success",
           description: "Project added successfully",
         });
       }
-      
+
       handleCloseModal();
       await fetchProjects();
     } catch (error) {
@@ -179,15 +233,15 @@ const ProjectsAdmin = () => {
 
   const handleDeleteConfirm = async () => {
     if (!projectToDelete || !projectToDelete._id) return;
-    
+
     try {
       await projectService.delete(projectToDelete._id);
-      
+
       toast({
         title: "Success",
         description: "Project deleted successfully",
       });
-      
+
       setDeleteDialogOpen(false);
       setProjectToDelete(null);
       await fetchProjects();
@@ -201,8 +255,8 @@ const ProjectsAdmin = () => {
     }
   };
 
-  const filteredProjects = categoryFilter 
-    ? projects.filter(p => p.category === categoryFilter) 
+  const filteredProjects = categoryFilter
+    ? projects.filter(p => p.category === categoryFilter)
     : projects;
 
   // Group projects by category for rendering
@@ -239,15 +293,15 @@ const ProjectsAdmin = () => {
                     <CardContent className="p-4 pt-0">
                       <div className="flex justify-between gap-2 mt-2">
                         <div className="flex items-center gap-2">
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             size="icon"
                             onClick={() => handleOpenModal(project)}
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             size="icon"
                             onClick={() => handleDeleteClick(project)}
                           >
@@ -264,7 +318,7 @@ const ProjectsAdmin = () => {
         </div>
       );
     }
-    
+
     return (
       <div className="space-y-6">
         {Object.entries(groupedProjects).map(([category, categoryProjects]) => (
@@ -310,15 +364,15 @@ const ProjectsAdmin = () => {
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
-                            <Button 
-                              variant="ghost" 
+                            <Button
+                              variant="ghost"
                               size="icon"
                               onClick={() => handleOpenModal(project)}
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button 
-                              variant="ghost" 
+                            <Button
+                              variant="ghost"
                               size="icon"
                               onClick={() => handleDeleteClick(project)}
                             >
@@ -358,7 +412,7 @@ const ProjectsAdmin = () => {
           <Plus className="h-4 w-4" /> Add Project
         </Button>
       </div>
-      
+
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -371,35 +425,35 @@ const ProjectsAdmin = () => {
           </CardContent>
         </Card>
       ) : renderProjectTable()}
-      
+
       {/* Add/Edit Project Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>{currentProject?._id ? "Edit Project" : "Add New Project"}</DialogTitle>
             <DialogDescription>
-              {currentProject?._id 
-                ? "Update the details of your existing project" 
+              {currentProject?._id
+                ? "Update the details of your existing project"
                 : "Fill in the details to add a new project to your portfolio"}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="title" className="text-sm font-medium">Title</label>
-                <Input 
-                  id="title" 
+                <Input
+                  id="title"
                   name="title"
-                  value={currentProject?.title || ""} 
+                  value={currentProject?.title || ""}
                   onChange={handleInputChange}
-                  placeholder="Project title" 
+                  placeholder="Project title"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label htmlFor="category" className="text-sm font-medium">Category</label>
-                <Select 
+                <Select
                   value={currentProject?.category || "frontend"}
                   onValueChange={handleSelectChange}
                 >
@@ -413,98 +467,108 @@ const ProjectsAdmin = () => {
                 </Select>
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="description" className="text-sm font-medium">Description</label>
-              <Textarea 
-                id="description" 
+              <Textarea
+                id="description"
                 name="description"
-                value={currentProject?.description || ""} 
+                value={currentProject?.description || ""}
                 onChange={handleInputChange}
-                placeholder="Write a brief description of the project" 
+                placeholder="Write a brief description of the project"
                 className="min-h-[100px]"
               />
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="cover" className="text-sm font-medium">Cover Image URL</label>
-              <Input 
-                id="cover" 
+              <Input
+                id="cover"
                 name="cover"
-                value={currentProject?.cover || ""} 
+                value={currentProject?.cover || ""}
                 onChange={handleInputChange}
-                placeholder="URL to the project cover image" 
+                placeholder="URL to the project cover image"
               />
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="images" className="text-sm font-medium">
                 Images URLs (comma-separated)
               </label>
-              <Input 
-                id="images" 
+              <Input
+                id="images"
                 name="images"
-                value={currentProject?.images?.join(", ") || ""} 
+                value={currentProject?.images?.join(", ") || ""}
                 onChange={handleImagesChange}
-                placeholder="URL1, URL2, URL3, ..." 
+                placeholder="URL1, URL2, URL3, ..."
               />
               <p className="text-xs text-muted-foreground">Add multiple image URLs separated by commas</p>
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="video" className="text-sm font-medium">YouTube Video URL</label>
-              <Input 
-                id="video" 
+              <Input
+                id="video"
                 name="video"
-                value={currentProject?.video || ""} 
+                value={currentProject?.video || ""}
                 onChange={handleInputChange}
-                placeholder="https://www.youtube.com/watch?v=..." 
+                placeholder="https://www.youtube.com/watch?v=..."
               />
               <p className="text-xs text-muted-foreground">YouTube video URL for project demo</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="githubUrl" className="text-sm font-medium">GitHub URL</label>
-                <Input 
-                  id="githubUrl" 
+                <Input
+                  id="githubUrl"
                   name="githubUrl"
-                  value={currentProject?.githubUrl || ""} 
+                  value={currentProject?.githubUrl || ""}
                   onChange={handleInputChange}
-                  placeholder="GitHub repository link" 
+                  placeholder="GitHub repository link"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label htmlFor="liveUrl" className="text-sm font-medium">Live URL</label>
-                <Input 
-                  id="liveUrl" 
+                <Input
+                  id="liveUrl"
                   name="liveUrl"
-                  value={currentProject?.liveUrl || ""} 
+                  value={currentProject?.liveUrl || ""}
                   onChange={handleInputChange}
-                  placeholder="Live demo URL" 
+                  placeholder="Live demo URL"
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="tags" className="text-sm font-medium">
                 Tags (comma-separated)
               </label>
-              <Input 
-                id="tags" 
+              <Input
+                id="tags"
                 name="tags"
-                value={currentProject?.tags.join(", ") || ""} 
+                value={tagsInput}
                 onChange={handleTagsChange}
-                placeholder="React, Node.js, MongoDB, etc." 
+                onKeyDown={handleTagsInputKeyDown}
+                onBlur={handleTagsInputBlur}
+                placeholder="React, Node.js, MongoDB, etc."
               />
+              <p className="text-xs text-muted-foreground">Press comma to add a tag</p>
+              {currentProject?.tags && currentProject.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {currentProject.tags.map((tag, index) => (
+                    <Badge key={index} variant="secondary">{tag}</Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-          
+
           <DialogFooter>
             <Button variant="outline" onClick={handleCloseModal}>Cancel</Button>
-            <Button 
-              onClick={handleSubmit} 
+            <Button
+              onClick={handleSubmit}
               disabled={isSubmitting}
               className="flex items-center gap-2"
             >
@@ -519,14 +583,14 @@ const ProjectsAdmin = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the project "{projectToDelete?.title}"? 
+              Are you sure you want to delete the project "{projectToDelete?.title}"?
               This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
@@ -534,8 +598,8 @@ const ProjectsAdmin = () => {
             <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
+            <Button
+              variant="destructive"
               onClick={handleDeleteConfirm}
             >
               Delete

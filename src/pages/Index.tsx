@@ -8,11 +8,20 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+
+    // Check if the path contains admin and redirect if needed
+    if (location.pathname.includes("admin")) {
+      navigate("/admin", { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   return (
     <ThemeProvider>

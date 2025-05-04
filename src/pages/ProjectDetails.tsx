@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -105,7 +104,7 @@ const ProjectDetails = () => {
                 >
                   <ArrowLeft className="h-4 w-4" /> Back to Projects
                 </Button>
-                
+
                 <div className="grid lg:grid-cols-3 gap-8">
                   <div className={`${isMobile ? 'order-2' : 'order-1'} lg:col-span-2`}>
                     <ProjectMedia
@@ -115,10 +114,7 @@ const ProjectDetails = () => {
                     />
                   </div>
                   <div className={`${isMobile ? 'order-1' : 'order-2'} lg:col-span-1`}>
-                    <ProjectInfo
-                      project={project}
-                      onOpenVideo={() => setIsVideoOpen(true)}
-                    />
+                    <ProjectInfo project={project} />
                   </div>
                 </div>
               </>

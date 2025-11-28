@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink } from "lucide-react";
-import { Project } from "@/data/projects";
+import { Project } from "@/model/project";
+import { ExternalLink, Github } from "lucide-react";
 
 interface ProjectInfoProps {
   project: Project;

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import ProjectCard from "./ProjectCard";
-import { Project } from "@/data/projects";
-import { projectService } from "@/services/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProjectModel } from "@/model/project";
+import { projectService } from "@/services/project_service";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import ProjectCard from "./ProjectCard";
 
 // Always fetches projects from API on mount, no cache
 const ProjectSkeleton = () => (
@@ -30,7 +30,7 @@ const ProjectSkeleton = () => (
 const ProjectsSection = () => {
   const [filter, setFilter] = useState("all");
   const [visibleProjects, setVisibleProjects] = useState(6);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -122,7 +122,7 @@ const ProjectsSection = () => {
             </div>
           ) : displayedProjects.length > 0 ? (
             displayedProjects.map((project) => (
-              <div key={project._id || project.id}>
+              <div key={project._id}>
                 <ProjectCard project={project} />
               </div>
             ))

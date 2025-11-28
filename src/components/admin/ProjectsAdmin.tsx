@@ -1,23 +1,28 @@
 
-import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -26,34 +31,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { Edit, Trash2, Plus, Loader2, ExternalLink, Youtube } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Project } from "@/data/projects";
-import { projectService } from "@/services/api";
+import { useToast } from "@/hooks/use-toast";
+import { ProjectModel } from "@/model/project";
+import { projectService } from "@/services/project_service";
+import { Edit, Loader2, Plus, Trash2, Youtube } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const ProjectsAdmin = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [currentProject, setCurrentProject] = useState<Project | null>(null);
-  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
+  const [currentProject, setCurrentProject] = useState<ProjectModel | null>(null);
+  const [projectToDelete, setProjectToDelete] = useState<ProjectModel | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [tagsInput, setTagsInput] = useState("");
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
-  const defaultProject: Project = {
+  const defaultProject: ProjectModel = {
+    _id: "",
     title: "",
     description: "",
     cover: "/placeholder.svg",
@@ -88,7 +88,7 @@ const ProjectsAdmin = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleOpenModal = (project: Project | null = null) => {
+  const handleOpenModal = (project: ProjectModel | null = null) => {
     if (project) {
       setCurrentProject(project);
       setTagsInput(project.tags.join(", "));
@@ -226,7 +226,7 @@ const ProjectsAdmin = () => {
     }
   };
 
-  const handleDeleteClick = (project: Project) => {
+  const handleDeleteClick = (project: ProjectModel) => {
     setProjectToDelete(project);
     setDeleteDialogOpen(true);
   };
@@ -267,7 +267,7 @@ const ProjectsAdmin = () => {
     }
     acc[category].push(project);
     return acc;
-  }, {} as Record<string, Project[]>);
+  }, {} as Record<string, ProjectModel[]>);
 
   // Responsive table renderer
   const renderProjectTable = () => {

@@ -1,10 +1,9 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import VideoModal from "@/components/VideoModal";
-import { Project } from "@/data/projects";
+import { Project } from "@/model/project";
+import { Play } from "lucide-react";
 
 interface ProjectMediaProps {
   project: Project;

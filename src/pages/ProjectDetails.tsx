@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { toast } from "sonner";
-import { projectService } from "@/services/api";
-import { Project } from "@/data/projects";
 import ProjectDetailsSkeleton from "@/components/ProjectDetailsSkeleton";
-import ProjectMedia from "@/components/ProjectMedia";
 import ProjectInfo from "@/components/ProjectInfo";
+import ProjectMedia from "@/components/ProjectMedia";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Button } from "@/components/ui/button";
 import VideoModal from "@/components/VideoModal";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ProjectModel } from "@/model/project";
+import { projectService } from "@/services/project_service";
+import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<ProjectModel | null>(null);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

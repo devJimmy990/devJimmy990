@@ -1,13 +1,13 @@
 
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Play, Github, ExternalLink } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Project } from "@/data/projects";
-import VideoModal from "./VideoModal";
+import { Project } from "@/model/project";
+import { ExternalLink, Github, Play } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import VideoModal from "./VideoModal";
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);

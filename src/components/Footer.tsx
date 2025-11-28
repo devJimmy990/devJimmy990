@@ -1,6 +1,4 @@
 
-import { ArrowUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useCVLinks } from '@/contexts/CVLinksContext';
 
@@ -16,14 +14,10 @@ const Footer = () => {
   };
 
   // Get Mobile and Frontend CV links from context
-  const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
-  const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
+  const mobileCVLink = cvLinks.find(link => link._id?.toLowerCase() === 'mobile')?.url;
+  const frontendCVLink = cvLinks.find(link => link._id?.toLowerCase() === 'frontend')?.url;
 
-  // Default links as fallback
-  const defaultLinks = {
-    mobile: "https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link",
-    frontend: "https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
-  };
+
 
   return (
     <footer className="bg-card py-6">
@@ -45,7 +39,7 @@ const Footer = () => {
 
           <div className="flex gap-4">
             <a
-              href={mobileCVLink || defaultLinks.mobile}
+              href={mobileCVLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -53,7 +47,7 @@ const Footer = () => {
               Mobile <span className="hidden md:inline">CV</span>
             </a>
             <a
-              href={frontendCVLink || defaultLinks.frontend}
+              href={frontendCVLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"

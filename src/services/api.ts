@@ -1,5 +1,5 @@
-import axios from "axios";
 import { Project } from "@/data/projects";
+import axios from "axios";
 
 // Create axios instance
 const api = axios.create({

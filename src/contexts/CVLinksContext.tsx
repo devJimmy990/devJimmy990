@@ -1,7 +1,6 @@
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { toast } from "sonner";
 import { cvService } from "@/services/api";
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export interface CVLink {
   id?: string;

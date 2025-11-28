@@ -1,17 +1,17 @@
 
-import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, FileText } from 'lucide-react';
-import { ThemeToggle } from './ThemeToggle';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Link, useLocation } from 'react-router-dom';
 import { useCVLinks } from '@/contexts/CVLinksContext';
+import { useIsMobile } from "@/hooks/use-mobile";
+import { FileText, Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,19 +72,13 @@ const Navbar = () => {
   };
 
   // Get Mobile and Frontend CV links from context
-  const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
-  const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
-
-  // Default links as fallback
-  const defaultLinks = {
-    mobile: "https://drive.google.com/file/d/1mnpK_HWyWzv7qllnfnPi1K5dOcRhEUxh/view?usp=drive_link",
-    frontend: "https://drive.google.com/file/d/1IjxmoaMeLrs7pAiLi_PR5SdNDF8umUoY/view?usp=drive_link"
-  };
+  const mobileCVLink = cvLinks.find(link => link._id?.toLowerCase() === 'mobile')?.url;
+  const frontendCVLink = cvLinks.find(link => link._id?.toLowerCase() === 'frontend')?.url;
 
   const downloadCV = (type: 'mobile' | 'frontend') => {
-    const link = type === 'mobile' 
-      ? (mobileCVLink || defaultLinks.mobile)
-      : (frontendCVLink || defaultLinks.frontend);
+    const link = type === 'mobile'
+      ? (mobileCVLink)
+      : (frontendCVLink);
     window.open(link, '_blank');
   };
 

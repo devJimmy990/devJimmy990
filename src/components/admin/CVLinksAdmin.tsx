@@ -1,26 +1,27 @@
-import { useState, useEffect } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { Loader2, Save, X, Plus, Trash2 } from "lucide-react";
-import { CV, cvService } from "@/services/api";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { CVModel } from "@/model/cv";
+import { cvService } from "@/services/cv_service";
+import { Loader2, Plus, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Always fetches latest data from API, never reuses local cache
 const CVLinksAdmin = () => {
-  const [cvLinks, setCvLinks] = useState<CV[]>([]);
+  const [cvLinks, setCvLinks] = useState<CVModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [newCV, setNewCV] = useState<CV>({ _id: "", url: "" });
+  const [newCV, setNewCV] = useState<CVModel | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -64,7 +65,7 @@ const CVLinksAdmin = () => {
         title: "Success",
         description: "CV link added successfully",
       });
-      setNewCV({ _id: "", url: "" });
+      setNewCV(null);
       await fetchCVLinks(); // Always refresh from API
     } catch (error) {
       console.error("Error saving CV link:", error);
@@ -110,20 +111,20 @@ const CVLinksAdmin = () => {
           {/* Add new CV link */}
           <div className="space-y-4 border-b pb-6">
             <h3 className="text-md font-medium">Add New CV Link</h3>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium">Title (ID)</label>
               <div className="relative">
-                <Input 
-                  value={newCV._id} 
+                <Input
+                  value={newCV._id}
                   onChange={(e) => setNewCV({ ...newCV, _id: e.target.value })}
                   placeholder="e.g., mobile, frontend"
                   className="pr-10"
                 />
                 {newCV._id && (
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="absolute right-0 top-0 h-full"
                     onClick={() => setNewCV({ ...newCV, _id: "" })}
                   >
@@ -132,20 +133,20 @@ const CVLinksAdmin = () => {
                 )}
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium">URL</label>
               <div className="relative">
-                <Input 
-                  value={newCV.url} 
+                <Input
+                  value={newCV.url}
                   onChange={(e) => setNewCV({ ...newCV, url: e.target.value })}
                   placeholder="Enter Google Drive or document URL"
                   className="pr-10"
                 />
                 {newCV.url && (
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="absolute right-0 top-0 h-full"
                     onClick={() => setNewCV({ ...newCV, url: "" })}
                   >
@@ -154,10 +155,10 @@ const CVLinksAdmin = () => {
                 )}
               </div>
             </div>
-            
+
             <div className="flex justify-end">
-              <Button 
-                onClick={handleAddCV} 
+              <Button
+                onClick={handleAddCV}
                 disabled={isSaving || !newCV._id || !newCV.url}
                 className="flex items-center gap-2"
               >
@@ -173,7 +174,7 @@ const CVLinksAdmin = () => {
               </Button>
             </div>
           </div>
-          
+
           {/* CV Links Table */}
           <div>
             <h3 className="text-md font-medium mb-4">Existing CV Links</h3>
@@ -195,9 +196,9 @@ const CVLinksAdmin = () => {
                     <TableRow key={cv._id}>
                       <TableCell className="font-medium">{cv._id}</TableCell>
                       <TableCell className="truncate max-w-[200px]">
-                        <a 
-                          href={cv.url} 
-                          target="_blank" 
+                        <a
+                          href={cv.url}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"
                         >
@@ -205,9 +206,9 @@ const CVLinksAdmin = () => {
                         </a>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
+                        <Button
+                          variant="ghost"
+                          size="icon"
                           onClick={() => setDeleteConfirm(cv._id)}
                         >
                           <Trash2 className="h-4 w-4 text-destructive" />
@@ -225,7 +226,7 @@ const CVLinksAdmin = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <AlertDialog open={!!deleteConfirm} onOpenChange={() => setDeleteConfirm(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -236,7 +237,7 @@ const CVLinksAdmin = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               className="bg-destructive hover:bg-destructive/90"
               onClick={() => deleteConfirm && handleDeleteCV(deleteConfirm)}
             >

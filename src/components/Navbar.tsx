@@ -72,8 +72,8 @@ const Navbar = () => {
   };
 
   // Get Mobile and Frontend CV links from context
-  const mobileCVLink = cvLinks.find(link => link.id?.toLowerCase() === 'mobile')?.url;
-  const frontendCVLink = cvLinks.find(link => link.id?.toLowerCase() === 'frontend')?.url;
+  const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
+  const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
 
   const downloadCV = (type: 'mobile' | 'frontend') => {
     const link = type === 'mobile'

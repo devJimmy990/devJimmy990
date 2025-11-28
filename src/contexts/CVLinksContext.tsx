@@ -1,16 +1,10 @@
 
-import { cvService } from "@/services/api";
+import { CVModel } from "@/model/cv";
+import { cvService } from "@/services/cv_service";
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export interface CVLink {
-  id?: string;
-  title: string;
-  url: string;
-  type: string;
-}
-
 interface CVLinksContextType {
-  cvLinks: CVLink[];
+  cvLinks: CVModel[];
   loading: boolean;
   error: boolean;
   refreshCVLinks: () => Promise<void>;
@@ -20,13 +14,13 @@ const CVLinksContext = createContext<CVLinksContextType>({
   cvLinks: [],
   loading: true,
   error: false,
-  refreshCVLinks: async () => {}
+  refreshCVLinks: async () => { }
 });
 
 export const useCVLinks = () => useContext(CVLinksContext);
 
 export const CVLinksProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cvLinks, setCVLinks] = useState<CVLink[]>([]);
+  const [cvLinks, setCVLinks] = useState<CVModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -36,7 +30,9 @@ export const CVLinksProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setError(false);
       const data = await cvService.getAll();
       if (Array.isArray(data)) {
+        console.log(data)
         setCVLinks(data);
+        console.log(cvLinks)
       } else {
         setCVLinks([]);
         setError(true);

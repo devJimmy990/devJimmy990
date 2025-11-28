@@ -1,12 +1,12 @@
 {
-    "rewrites": [
-        {
-            "source": "/admin",
-            "destination": "/"
-        },
-        {
-            "source": "/admin/**",
-            "destination": "/"
-        }
-    ]
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/"
+    }
+  ]
 }

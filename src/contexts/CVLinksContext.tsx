@@ -4,7 +4,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export interface CVLink {
   id?: string;
-  _id?: string;
   title: string;
   url: string;
   type: string;

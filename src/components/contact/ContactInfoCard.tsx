@@ -1,6 +1,5 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
 
 interface ContactInfoCardProps {
   icon: React.ReactNode;
@@ -10,16 +9,18 @@ interface ContactInfoCardProps {
   onClick?: () => void;
   link?: string;
   isMobile: boolean;
+  isStatic?: boolean;
 }
 
-const ContactInfoCard = ({ 
-  icon, 
-  title, 
-  content, 
-  subContent, 
-  onClick, 
+const ContactInfoCard = ({
+  icon,
+  title,
+  content,
+  subContent,
+  onClick,
   link,
-  isMobile 
+  isMobile,
+  isStatic,
 }: ContactInfoCardProps) => {
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (link) {
@@ -43,7 +44,7 @@ const ContactInfoCard = ({
 
   return (
     <CardWrapper>
-      <Card className="border-white/5 bg-card hover:shadow-md transition-all transform hover:-translate-y-1 group h-full">
+      <Card className={`border-white/5 bg-card h-full ${!isStatic && "hover:shadow-md transition-all transform hover:-translate-y-1 group"}`}>
         <CardContent className="p-4 flex items-center gap-3">
           <div className="bg-primary/10 p-2 rounded-full text-primary shrink-0">
             {icon}

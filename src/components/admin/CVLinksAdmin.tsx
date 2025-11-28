@@ -21,7 +21,7 @@ const CVLinksAdmin = () => {
   const [cvLinks, setCvLinks] = useState<CVModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [newCV, setNewCV] = useState<CVModel | null>(null);
+  const [newCV, setNewCV] = useState<CVModel>({ _id: "", url: "", type: "", region: "" });
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -194,7 +194,7 @@ const CVLinksAdmin = () => {
                 <TableBody>
                   {cvLinks.map((cv) => (
                     <TableRow key={cv._id}>
-                      <TableCell className="font-medium">{cv._id}</TableCell>
+                      <TableCell className="font-medium capitalize">{cv.type} - {cv.region}</TableCell>
                       <TableCell className="truncate max-w-[200px]">
                         <a
                           href={cv.url}

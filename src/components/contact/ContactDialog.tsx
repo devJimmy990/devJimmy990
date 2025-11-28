@@ -12,17 +12,18 @@ import { MessageSquare, Phone } from "lucide-react";
 
 interface ContactDialogProps {
   isOpen: boolean;
+  phone: string;
   onOpenChange: (open: boolean) => void;
 }
 
-const ContactDialog = ({ isOpen, onOpenChange }: ContactDialogProps) => {
+const ContactDialog = ({ isOpen, phone, onOpenChange }: ContactDialogProps) => {
   const openWhatsapp = () => {
-    window.open(`https://wa.me/201289223643`, "_blank");
+    window.open(`https://wa.me/${phone}`, "_blank");
     onOpenChange(false);
   };
 
   const openPhoneCall = () => {
-    window.open(`tel:+201289223643`, "_blank");
+    window.open(`tel:${phone}`, "_blank");
     onOpenChange(false);
   };
 
@@ -36,16 +37,16 @@ const ContactDialog = ({ isOpen, onOpenChange }: ContactDialogProps) => {
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-4 py-4">
-          <Button 
-            onClick={openWhatsapp} 
+          <Button
+            onClick={openWhatsapp}
             className="flex flex-col items-center gap-2 h-auto py-4"
             variant="outline"
           >
             <MessageSquare className="h-8 w-8 text-green-500" />
             <span>WhatsApp</span>
           </Button>
-          <Button 
-            onClick={openPhoneCall} 
+          <Button
+            onClick={openPhoneCall}
             className="flex flex-col items-center gap-2 h-auto py-4"
             variant="outline"
           >
@@ -54,8 +55,8 @@ const ContactDialog = ({ isOpen, onOpenChange }: ContactDialogProps) => {
           </Button>
         </div>
         <DialogFooter>
-          <Button 
-            variant="secondary" 
+          <Button
+            variant="secondary"
             onClick={() => onOpenChange(false)}
           >
             Cancel

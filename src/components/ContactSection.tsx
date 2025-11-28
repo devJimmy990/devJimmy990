@@ -1,36 +1,74 @@
-
-import { useState } from "react";
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import api from "@/services/api";
+import { Github, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { useEffect, useState } from "react";
+import ContactDialog from "./contact/ContactDialog";
 import ContactForm from "./contact/ContactForm";
 import ContactInfoCard from "./contact/ContactInfoCard";
-import ContactDialog from "./contact/ContactDialog";
 
 const ContactSection = () => {
   const isMobile = useIsMobile();
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
+  const [country, setCountry] = useState<string>("EG"); // default to Egypt
 
-  const contactInfo = [
-    {
-      icon: <Mail className="h-5 w-5" />,
-      title: "Email",
-      content: "muhammedgamal997@gmail.com",
-      link: "mailto:muhammedgamal997@gmail.com"
-    },
-    {
-      icon: <Phone className="h-5 w-5" />,
-      title: "Phone",
-      content: "+20 128 922 3643",
-      onClick: () => setIsPhoneDialogOpen(true),
-    },
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      title: "Location",
-      content: "Alexandria, Egypt",
-      subContent: "Open to relocation",
-      link: "https://maps.app.goo.gl/Ti4HfJu9B6FuJ7iF6"
-    }
-  ];
+  useEffect(() => {
+    const fetchCountry = async () => {
+      try {
+        // Using free geolocation API
+        const { data } = await api.get("https://ipapi.co/json/");
+        setCountry(data.country_code); // EG, AE, US, etc.
+      } catch (error) {
+        console.error("Could not detect country:", error);
+      }
+    };
+
+    fetchCountry();
+  }, []);
+
+  // Contact info based on country
+  const contactInfo = country === "AE"
+    ? [
+      {
+        icon: <Mail className="h-5 w-5" />,
+        title: "Email",
+        content: "devjimmy99@gmail.com",
+        link: "mailto:devjimmy99@gmail.com"
+      },
+      {
+        icon: <Phone className="h-5 w-5" />,
+        title: "Phone",
+        content: "+971 50 906 3004",
+        onClick: () => setIsPhoneDialogOpen(true),
+      },
+      {
+        isStatic: true,
+        title: "Location",
+        content: "Deira, Dubai - UAE",
+        subContent: "Open to relocation",
+        icon: <MapPin className="h-5 w-5" />,
+      }
+    ]
+    : [
+      {
+        icon: <Mail className="h-5 w-5" />,
+        title: "Email",
+        content: "devjimmy99@gmail.com",
+        link: "mailto:devjimmy99@gmail.com"
+      },
+      {
+        icon: <Phone className="h-5 w-5" />,
+        title: "Phone",
+        content: "+20 128 922 3643",
+        onClick: () => setIsPhoneDialogOpen(true),
+      },
+      {
+        isStatic: true,
+        title: "Location",
+        content: "Alexandria, Egypt",
+        subContent: "Open to relocation",
+        icon: <MapPin className="h-5 w-5" />,
+      }
+    ];
 
   const socialLinks = [
     {
@@ -42,6 +80,10 @@ const ContactSection = () => {
       name: "linkedin",
       icon: <Linkedin className="w-5 h-5" />,
       href: "https://linkedin.com/in/mogamaal"
+    }, {
+      name: "youTube",
+      icon: <Youtube className="w-5 h-5" />,
+      href: "https://www.youtube.com/@Dev_Jimmy"
     }
   ];
 
@@ -63,8 +105,8 @@ const ContactSection = () => {
             <div className={`grid ${isMobile ? "grid-cols-1" : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"} gap-4`}>
               {contactInfo.map((item, index) => (
                 <ContactInfoCard
-                  key={index}
                   {...item}
+                  key={index}
                   isMobile={isMobile}
                 />
               ))}
@@ -93,6 +135,7 @@ const ContactSection = () => {
       <ContactDialog
         isOpen={isPhoneDialogOpen}
         onOpenChange={setIsPhoneDialogOpen}
+        phone={country === "AE" ? "+971509063004" : "+201289223643"}
       />
     </section>
   );

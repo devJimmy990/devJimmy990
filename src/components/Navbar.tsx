@@ -46,30 +46,7 @@ const Navbar = () => {
     }
   };
 
-  const renderNavItems = () => {
-    if (isHomePage) {
-      return navItems.map((item) => (
-        <a
-          key={item.name}
-          href={item.href}
-          className="text-muted-foreground hover:text-primary transition-colors"
-          onClick={handleNavItemClick}
-        >
-          {item.name}
-        </a>
-      ));
-    } else {
-      return (
-        <Link
-          to="/"
-          className="text-muted-foreground hover:text-primary transition-colors"
-          onClick={handleNavItemClick}
-        >
-          Back to Home
-        </Link>
-      );
-    }
-  };
+
 
   // Get Mobile and Frontend CV links from context
   const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
@@ -86,7 +63,7 @@ const Navbar = () => {
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrollPosition > 50 ? 'bg-background/90 backdrop-blur-lg shadow-md' : 'bg-transparent'}`}>
       <nav className="container mx-auto py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
-          <img src="/profile.png" alt="DevJimmy"
+          <img src="/profile.png" alt="DevJimmy" loading="lazy"
             className="h-10 w-10 rounded-full object-cover border-2 border-primary"
           />
           <span className="hidden md:block text-2xl font-bold text-gradient">DevJimmy</span>
@@ -94,7 +71,6 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
-          {renderNavItems()}
           <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -140,7 +116,6 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="w-full md:hidden fixed bg-background/95 backdrop-blur-lg z-40 flex flex-col">
           <div className="container py-4 flex flex-col space-y-6">
-            {renderNavItems()}
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-3">Resume</h3>
               <div className="flex flex-col space-y-2">

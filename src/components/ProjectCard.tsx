@@ -1,54 +1,36 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { CONFIG } from "@/config";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Project } from "@/model/project";
-import { ExternalLink, Github, Play } from "lucide-react";
-import { useState } from "react";
+import { ProjectModel } from "@/model/project";
+import { ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import VideoModal from "./VideoModal";
 
-const ProjectCard = ({ project }: { project: Project }) => {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
+const ProjectCard = ({ project }: { project: ProjectModel }) => {
   const isMobile = useIsMobile();
-  
-  const handleVideoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsVideoOpen(true);
-  };
-  
+
   const handleExternalClick = (e: React.MouseEvent, url: string | null) => {
     e.preventDefault();
     e.stopPropagation();
     if (url) window.open(url, '_blank');
   };
-  
+
   return (
     <>
-      <Link to={`/project/${project._id || project.id}`} className="block h-full">
+      <Link to={`/project/${project._id}`} className="block h-full">
         <Card className="flex flex-col h-full bg-card border-white/5 overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:border-primary/20 hover:-translate-y-1">
           <div className="aspect-video bg-muted overflow-hidden relative">
-            <img 
-              src={project.cover || "/placeholder.svg"} 
-              alt={project.title} 
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+            <img
+              loading="lazy" alt={project.title}
+              src={`${CONFIG.BUCKET}/${project.cover ?? project.images[0]}`}
+              className="w-full h-full object-fill hover:scale-105 transition-transform duration-500"
             />
-            {project.video && (
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="absolute bottom-3 right-3 rounded-full bg-black/70 border-0 hover:bg-black/90 z-10"
-                onClick={handleVideoClick}
-              >
-                <Play className="h-4 w-4 text-white" />
-              </Button>
-            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             <Badge className="absolute top-3 left-3 capitalize bg-primary/90">{project.category}</Badge>
           </div>
-          
+
           <CardContent className="flex-grow flex flex-col p-4">
             <div className="mb-2">
               <h3 className="text-lg font-semibold hover:text-primary transition-colors line-clamp-2">
@@ -67,56 +49,66 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 )}
               </div>
             </div>
-            
+
             <p className={`text-muted-foreground text-sm ${isMobile ? 'line-clamp-2' : 'line-clamp-3'} mb-4`}>
               {project.description}
             </p>
           </CardContent>
-          
+
           <CardFooter className="p-4 pt-0 mt-auto">
-            <div className="flex justify-between w-full">
-              {project.githubUrl ? (
-                <>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="gap-1" 
-                    onClick={(e) => handleExternalClick(e, project.githubUrl)}
-                  >
-                    <Github className="h-3 w-3" />
-                    {!isMobile && "Code"}
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    className="gap-1"
-                    onClick={(e) => handleExternalClick(e, project.liveUrl)}
-                  >
-                    <ExternalLink className="h-3 w-3" />
-                    {!isMobile && "Live Demo"}
-                  </Button>
-                </>
-              ) : (
-                <Button 
-                  size="sm" 
-                  className="gap-1 mx-auto w-full"
+            <div className="flex justify-center gap-4 w-full">
+              {project.githubUrl &&
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1"
+                  onClick={(e) => handleExternalClick(e, project.githubUrl)}
+                >
+                  <Github className="h-3 w-3" />
+                  {!isMobile && "View Code"}
+                </Button>
+              }
+
+              {project.liveUrl &&
+
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1"
                   onClick={(e) => handleExternalClick(e, project.liveUrl)}
                 >
                   <ExternalLink className="h-3 w-3" />
-                  Live Demo
+                  {!isMobile && "Live Demo"}
                 </Button>
-              )}
+              }
+
+              {project.androidUrl && <Button
+                size="sm"
+                variant="outline"
+                className="gap-1"
+                onClick={(e) => handleExternalClick(e, project.androidUrl)}
+              >
+                <ExternalLink className="h-3 w-3" />
+                {!isMobile && "Google Play"}
+              </Button>
+              }
+
+              {project.iosUrl && <Button
+                size="sm"
+                variant="outline"
+                className="gap-1"
+                onClick={(e) => handleExternalClick(e, project.iosUrl)}
+              >
+                <ExternalLink className="h-3 w-3" />
+                {!isMobile && "App Store"}
+              </Button>
+              }
+
             </div>
           </CardFooter>
         </Card>
       </Link>
-      
-      {project.video && (
-        <VideoModal 
-          isOpen={isVideoOpen} 
-          onClose={() => setIsVideoOpen(false)} 
-          videoUrl={project.video || ""} 
-        />
-      )}
+
     </>
   );
 };

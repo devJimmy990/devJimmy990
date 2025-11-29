@@ -56,13 +56,15 @@ const ProjectsAdmin = () => {
     _id: "",
     title: "",
     description: "",
-    cover: "/placeholder.svg",
+    category: "frontend",
+    tags: [],
     images: [],
     video: null,
-    tags: [],
-    githubUrl: null,
+    cover: null,
+    iosUrl: null,
     liveUrl: null,
-    category: "frontend",
+    githubUrl: null,
+    androidUrl: null,
   };
 
   const fetchProjects = async () => {

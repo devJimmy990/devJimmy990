@@ -2,14 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProjectModel } from "@/model/project";
 import { ExternalLink, Github } from "lucide-react";
-import RatingStats from "./ProjectRatingStats";
 
 interface ProjectInfoProps {
   project: ProjectModel;
 }
 
-const ProjectInfo = ({ project }: ProjectInfoProps) => {
-
+const ProjectInfoCard = ({ project }: ProjectInfoProps) => {
   return (
     <div className="space-y-6">
       <div>
@@ -43,6 +41,14 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
             </a>
           </Button>
         )}
+
+        {project.githubUrl && (
+          <Button className="flex items-center gap-2" variant="outline" asChild>
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              <Github className="h-4 w-4" /> View Code
+            </a>
+          </Button>
+        )}
         {project.androidUrl && (
           <Button
             className={`flex items-center gap-2 ${!project.githubUrl ? 'w-full justify-center' : ''}`}
@@ -65,10 +71,9 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
         )}
       </div>
 
-      <RatingStats reviews={project.reviews} />
 
     </div>
   );
 };
 
-export default ProjectInfo;
+export default ProjectInfoCard;

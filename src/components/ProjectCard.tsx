@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 
 const ProjectCard = ({ project }: { project: ProjectModel }) => {
   const isMobile = useIsMobile();
-
+  console.log(CONFIG.BUCKET);
   const handleExternalClick = (e: React.MouseEvent, url: string | null) => {
     e.preventDefault();
     e.stopPropagation();

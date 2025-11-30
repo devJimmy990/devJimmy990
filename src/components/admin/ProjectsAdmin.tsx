@@ -56,7 +56,7 @@ const ProjectsAdmin = () => {
     _id: "",
     title: "",
     description: "",
-    category: "frontend",
+    type: "frontend",
     tags: [],
     images: [],
     video: null,
@@ -65,6 +65,7 @@ const ProjectsAdmin = () => {
     liveUrl: null,
     githubUrl: null,
     androidUrl: null,
+    reviews: [],
   };
 
   const fetchProjects = async () => {
@@ -118,7 +119,6 @@ const ProjectsAdmin = () => {
 
   const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!currentProject) return;
-    console.log(e.target.value);
     const imagesArray = e.target.value.split(",").map(img => img.trim()).filter(img => img);
 
     setCurrentProject({
@@ -132,7 +132,7 @@ const ProjectsAdmin = () => {
 
     setCurrentProject({
       ...currentProject,
-      category: value as "frontend" | "mobile",
+      type: value as "frontend" | "mobile",
     });
   };
 
@@ -258,16 +258,16 @@ const ProjectsAdmin = () => {
   };
 
   const filteredProjects = categoryFilter
-    ? projects.filter(p => p.category === categoryFilter)
+    ? projects.filter(p => p.type === categoryFilter)
     : projects;
 
   // Group projects by category for rendering
   const groupedProjects = filteredProjects.reduce((acc, project) => {
-    const category = project.category;
-    if (!acc[category]) {
-      acc[category] = [];
+    const type = project.type;
+    if (!acc[type]) {
+      acc[type] = [];
     }
-    acc[category].push(project);
+    acc[type].push(project);
     return acc;
   }, {} as Record<string, ProjectModel[]>);
 
@@ -454,13 +454,13 @@ const ProjectsAdmin = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="category" className="text-sm font-medium">Category</label>
+                <label htmlFor="type" className="text-sm font-medium">Platform</label>
                 <Select
-                  value={currentProject?.category || "frontend"}
+                  value={currentProject?.type || "frontend"}
                   onValueChange={handleSelectChange}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="frontend">Frontend</SelectItem>

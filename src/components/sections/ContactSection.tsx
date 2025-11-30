@@ -2,9 +2,10 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import api from "@/services/api";
 import { Github, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { useEffect, useState } from "react";
-import ContactDialog from "./contact/ContactDialog";
-import ContactForm from "./contact/ContactForm";
-import ContactInfoCard from "./contact/ContactInfoCard";
+import ContactDialog from "../contact/ContactDialog";
+import ContactForm from "../contact/ContactForm";
+import ContactInfoCard from "../contact/ContactInfoCard";
+
 
 const ContactSection = () => {
   const isMobile = useIsMobile();

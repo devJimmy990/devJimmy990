@@ -7,8 +7,8 @@ export interface ProjectModel {
   cover: string | null;
   video: string | null;
   githubUrl: string | null;
-  category: "frontend" | "mobile";
-  reviews: { comment: string, rate: number, _id: string }[];
+  type: "frontend" | "mobile";
+  reviews: { comment: string, date: string, rate: number, _id: string }[];
 
   /** live - url */
   iosUrl: string | null;

@@ -1,11 +1,11 @@
 
-import AboutSection from "@/components/AboutSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
-import ProjectsSection from "@/components/ProjectsSection";
-import SkillsSection from "@/components/SkillsSection";
+import AboutSection from "@/components/sections/AboutSection";
+import ContactSection from "@/components/sections/ContactSection";
+import HeroSection from "@/components/sections/HeroSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import SkillsSection from "@/components/sections/SkillsSection";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 

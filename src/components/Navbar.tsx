@@ -13,6 +13,14 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
+const navItems = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
+];
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -23,13 +31,7 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
-  ];
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,9 +48,31 @@ const Navbar = () => {
     }
   };
 
+  const renderNavItems = () => {
+    if (isHomePage) {
+      return navItems.map((item) => (
+        <a
+          key={item.name}
+          href={item.href}
+          className="text-muted-foreground hover:text-primary transition-colors"
+          onClick={handleNavItemClick}
+        >
+          {item.name}
+        </a>
+      ));
+    } else {
+      return (
+        <Link
+          to="/"
+          className="text-muted-foreground hover:text-primary transition-colors"
+          onClick={handleNavItemClick}
+        >
+          Back to Home
+        </Link>
+      );
+    }
+  };
 
-
-  // Get Mobile and Frontend CV links from context
   const mobileCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'mobile')?.url;
   const frontendCVLink = cvLinks.find(link => link.type?.toLowerCase() === 'frontend')?.url;
 
@@ -71,6 +95,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
+          {renderNavItems()}
           <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -116,6 +141,7 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="w-full md:hidden fixed bg-background/95 backdrop-blur-lg z-40 flex flex-col">
           <div className="container py-4 flex flex-col space-y-6">
+            {renderNavItems()}
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-3">Resume</h3>
               <div className="flex flex-col space-y-2">

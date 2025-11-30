@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ProjectModel } from "@/model/project";
-import { projectService } from "@/services/project_service";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import ProjectCard from "./ProjectCard";
+import { useProjects } from "@/contexts/ProjectsContext";
+import { useState } from "react";
+import ProjectCard from "../project/ProjectCard";
 
 // Always fetches projects from API on mount, no cache
 const ProjectSkeleton = () => (
@@ -28,41 +26,14 @@ const ProjectSkeleton = () => (
 );
 
 const ProjectsSection = () => {
+  const { projects, loading, error } = useProjects();
   const [filter, setFilter] = useState("all");
   const [visibleProjects, setVisibleProjects] = useState(6);
-  const [projects, setProjects] = useState<ProjectModel[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    // Always fresh fetch when component mounts
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        setError(false);
-        const data = await projectService.getAll();
-        if (Array.isArray(data)) {
-          setProjects(data);
-        } else {
-          setProjects([]);
-          setError(true);
-          toast.error("Failed to load projects data");
-        }
-      } catch (error) {
-        setProjects([]);
-        setError(true);
-        toast.error("Failed to load projects");
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchProjects();
-  }, []);
-
-  const filteredProjects = filter === "all" 
-    ? projects 
-    : projects.filter(project => project.category === filter);
+  const filteredProjects = filter === "all"
+    ? projects
+    : projects.filter(project => project.type === filter);
 
   const displayedProjects = filteredProjects.slice(0, visibleProjects);
   const hasMoreProjects = filteredProjects.length > visibleProjects;
@@ -83,24 +54,24 @@ const ProjectsSection = () => {
             A selection of my recent web and mobile development projects.
             Each project showcases different skills and technologies.
           </p>
-          
+
           <div className="flex gap-2 mt-8">
-            <Button 
-              variant={filter === "all" ? "default" : "outline"} 
+            <Button
+              variant={filter === "all" ? "default" : "outline"}
               onClick={() => setFilter("all")}
               className="px-6"
             >
               All
             </Button>
-            <Button 
-              variant={filter === "frontend" ? "default" : "outline"} 
+            <Button
+              variant={filter === "frontend" ? "default" : "outline"}
               onClick={() => setFilter("frontend")}
               className="px-6"
             >
               Frontend
             </Button>
-            <Button 
-              variant={filter === "mobile" ? "default" : "outline"} 
+            <Button
+              variant={filter === "mobile" ? "default" : "outline"}
               onClick={() => setFilter("mobile")}
               className="px-6"
             >
@@ -132,7 +103,7 @@ const ProjectsSection = () => {
             </div>
           )}
         </div>
-        
+
         {!loading && !error && hasMoreProjects && (
           <div className="flex justify-center mt-12">
             <Button variant="outline" size="lg" onClick={showMoreProjects}>

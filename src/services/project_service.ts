@@ -22,6 +22,20 @@ export const projectService = {
         }
     },
 
+    addReview: async (id: string, review: { rate: number, comment: string }) => {
+        try {
+            const apiCall = async () => {
+                const response = await api.post(`/project/${id}/review`, { ...review });
+                return response.data.data;
+            };
+
+            return await retryApiCall(apiCall);
+        } catch (error) {
+            console.error("Error creating project:", error);
+            throw error;
+        }
+    },
+
     create: async (project: ProjectModel) => {
         try {
             const apiCall = async () => {

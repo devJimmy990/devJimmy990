@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SkillIcons from "./icons/SkillIcons";
+import { useState } from "react";
+import SkillIcons from "../icons/SkillIcons";
 
 const SkillsSection = () => {
   const [activeTab, setActiveTab] = useState("frontend");
@@ -71,7 +71,7 @@ const SkillsSection = () => {
               <TabsTrigger value="mobile" className="px-8">Mobile</TabsTrigger>
               <TabsTrigger value="other" className="px-8">Other</TabsTrigger>
             </TabsList>
-            
+
             {Object.entries(skills).map(([category, categorySkills]) => (
               <TabsContent key={category} value={category} className="space-y-8">
                 <div className="grid md:grid-cols-2 gap-8">
@@ -89,7 +89,7 @@ const SkillsSection = () => {
                 {logosByCategory[category as keyof typeof logosByCategory].length > 0 && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-12">
                     {logosByCategory[category as keyof typeof logosByCategory].map((logo, idx) => (
-                      <div 
+                      <div
                         key={idx}
                         className="aspect-square bg-card rounded-lg flex flex-col items-center justify-center p-4 border border-white/5 hover:border-primary/50 transition-all duration-300"
                       >

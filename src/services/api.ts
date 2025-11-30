@@ -38,7 +38,6 @@ export const retryApiCall = async <T>(
       return await apiCall();
     } catch (error) {
       retries++;
-      console.log(`API call failed. Retry attempt ${retries}/${maxRetries}`);
 
       if (retries >= maxRetries) {
         console.error("Maximum retry attempts reached:", error);

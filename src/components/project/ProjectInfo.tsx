@@ -14,7 +14,7 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold mb-3">{project.title}</h1>
-        <Badge className="mb-3 capitalize">{project.category}</Badge>
+        <Badge className="mb-3 capitalize">{project.type}</Badge>
         <div className="flex flex-wrap gap-2 mb-6">
           {project.tags.map((tag, index) => (
             <Badge key={index} variant="secondary">

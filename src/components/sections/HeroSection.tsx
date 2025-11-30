@@ -1,10 +1,10 @@
 
-import { useEffect, useState, useRef } from "react";
-import { ArrowDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
-import ScrollToTop from "./ScrollToTop";
+import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ArrowDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import ScrollToTop from "../ScrollToTop";
 
 const roles: string[] = ["Frontend Developer", "Mobile Developer"];
 const HeroSection = () => {

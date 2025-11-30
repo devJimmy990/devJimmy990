@@ -30,9 +30,7 @@ export const CVLinksProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setError(false);
       const data = await cvService.getAll();
       if (Array.isArray(data)) {
-        console.log(data)
         setCVLinks(data);
-        console.log(cvLinks)
       } else {
         setCVLinks([]);
         setError(true);

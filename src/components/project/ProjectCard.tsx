@@ -6,11 +6,10 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ProjectModel } from "@/model/project";
 import { ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const ProjectCard = ({ project }: { project: ProjectModel }) => {
   const isMobile = useIsMobile();
-  console.log(CONFIG.BUCKET);
   const handleExternalClick = (e: React.MouseEvent, url: string | null) => {
     e.preventDefault();
     e.stopPropagation();
@@ -28,7 +27,7 @@ const ProjectCard = ({ project }: { project: ProjectModel }) => {
               className="w-full h-full object-fill hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            <Badge className="absolute top-3 left-3 capitalize bg-primary/90">{project.category}</Badge>
+            <Badge className="absolute top-3 left-3 capitalize bg-primary/90">{project.type}</Badge>
           </div>
 
           <CardContent className="flex-grow flex flex-col p-4">

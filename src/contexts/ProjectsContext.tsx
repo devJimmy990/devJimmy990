@@ -54,6 +54,7 @@ export const ProjectsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setLoading(true);
       setError(false);
       const data = await projectService.getById(id);
+      console.log(data);
       if (data) {
         setProjects([...projects, data]);
       }

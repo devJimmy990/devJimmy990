@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useProjects } from "@/contexts/ProjectsContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectCard from "../project/ProjectCard";
 
 // Always fetches projects from API on mount, no cache
@@ -26,11 +26,15 @@ const ProjectSkeleton = () => (
 );
 
 const ProjectsSection = () => {
-  const { projects, loading, error } = useProjects();
+  const { projects, loading, error, refreshProjects } = useProjects();
   const [filter, setFilter] = useState("all");
   const [visibleProjects, setVisibleProjects] = useState(6);
 
-
+  useEffect(() => {
+    if (projects.length < 2) {
+      refreshProjects();
+    }
+  }, [projects]);
   const filteredProjects = filter === "all"
     ? projects
     : projects.filter(project => project.type === filter);

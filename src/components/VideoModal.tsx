@@ -10,6 +10,10 @@ const VideoModal = ({ videoUrl }: VideoModalProps) => {
   useEffect(() => {
     if (!videoUrl) return;
 
+    if (videoUrl.includes("drive")) {
+      setEmbedUrl(videoUrl);
+      return;
+    }
     // Supports:
     // - youtube.com/watch?v=ID
     // - youtu.be/ID

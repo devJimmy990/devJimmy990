@@ -22,6 +22,19 @@ export const projectService = {
         }
     },
 
+    getById: async (id: string) => {
+        try {
+            const apiCall = async () => {
+                const response = await api.get(`/project/${id}`);
+                return response.data.data;
+            };
+
+            return await retryApiCall(apiCall);
+        } catch (error) {
+            console.error("Error fetching project:", error);
+            throw error;
+        }
+    },
     addReview: async (id: string, review: { rate: number, comment: string }) => {
         try {
             const apiCall = async () => {

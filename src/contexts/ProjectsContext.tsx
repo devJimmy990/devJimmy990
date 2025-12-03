@@ -8,6 +8,7 @@ interface ProjectsContextType {
   loading: boolean;
   error: boolean;
   refreshProjects: () => Promise<void>;
+  getProjectById: (id: string) => Promise<void>;
   updateProject: (review: { rate: number, comment: string }, id: string) => Promise<void>;
 }
 
@@ -15,8 +16,9 @@ const ProjectsContext = createContext<ProjectsContextType>({
   projects: [],
   loading: true,
   error: false,
+  updateProject: async () => { },
   refreshProjects: async () => { },
-  updateProject: async () => { }
+  getProjectById: (id: string) => null,
 });
 
 export const useProjects = () => useContext(ProjectsContext);
@@ -47,6 +49,22 @@ export const ProjectsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
+  const getProjectById = async (id: string) => {
+    try {
+      setLoading(true);
+      setError(false);
+      const data = await projectService.getById(id);
+      if (data) {
+        setProjects([...projects, data]);
+      }
+    } catch (error) {
+      console.error("Error fetching project data:", error);
+      setError(true);
+
+    } finally {
+      setLoading(false);
+    }
+  }
   const updateProject = async (review: { rate: number, comment: string }, id: string) => {
     try {
       const updatedProject = await projectService.addReview(id, review);
@@ -69,7 +87,7 @@ export const ProjectsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, []);
 
   return (
-    <ProjectsContext.Provider value={{ projects, loading, error, refreshProjects, updateProject }}>
+    <ProjectsContext.Provider value={{ projects, loading, error, refreshProjects, updateProject, getProjectById }}>
       {children}
     </ProjectsContext.Provider>
   );

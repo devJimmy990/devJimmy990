@@ -12,12 +12,17 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 const ProjectDetails = () => {
-  const { projects } = useProjects();
+  const { projects, getProjectById } = useProjects();
   const { id } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState<ProjectModel | null>(null);
   const isMobile = useIsMobile();
   useEffect(() => {
+    if (projects.length === 0) {
+      console.log(id)
+      getProjectById(id!);
+      return;
+    }
     const foundProject = projects.find((proj) => proj._id === id);
     if (foundProject) {
       setProject(foundProject);
